@@ -180,6 +180,7 @@ static bool is_argument_with_space(const char* argument)
         "-segs_read_only_addr",
         "-segs_read_write_addr",
         "-serialize-diagnostics",
+        "--serialize-diagnostics",
         "-std",
         "--stdlib",
         "--force-link",
@@ -520,9 +521,8 @@ bool analyse_argv(const char * const *argv, CompileJob &job, bool icerun, list<s
                     if (dot_index != string::npos) {
                         string ext = p.substr(dot_index + 1);
 
-                        if (ext[0] != 'h' && ext[0] != 'H'
-                            && (access(p.c_str(), R_OK)
-                                || access((p + ".gch").c_str(), R_OK))) {
+                        if (ext[0] != 'h' && ext[0] != 'H' && access(p.c_str(), R_OK) < 0
+                            && access((p + ".gch").c_str(), R_OK) < 0) {
                             log_info() << "include file or gch file for argument " << a << " " << p
                                        << " missing, building locally" << endl;
                             always_local = true;
