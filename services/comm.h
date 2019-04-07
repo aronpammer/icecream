@@ -44,7 +44,7 @@
 // MAX_SCHEDULER_PING must be multiple of MAX_SCHEDULER_PONG
 #define MAX_SCHEDULER_PING 12 * MAX_SCHEDULER_PONG
 // maximum amount of time in seconds a daemon can be busy installing
-#define MAX_BUSY_INSTALLING 120
+#define MAX_BUSY_INSTALLING 1200
 
 #define IS_PROTOCOL_22(c) ((c)->protocol >= 22)
 #define IS_PROTOCOL_23(c) ((c)->protocol >= 23)
