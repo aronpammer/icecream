@@ -414,10 +414,10 @@ struct timeval last_stat;
 
 // Initial rlimit for a compile job, measured in megabytes.  Will vary with
 // the amount of available memory.
-int mem_limit = 100;
+int mem_limit = 1000;
 
 // Minimum rlimit for a compile job, measured in megabytes.
-const int min_mem_limit = 100;
+const int min_mem_limit = 1000;
 
 unsigned int max_kids = 0;
 

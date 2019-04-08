@@ -8,7 +8,7 @@ How to install icecream
 
 cd icecream
 ./autogen.sh
-./configure --prefix=/opt/icecream
+./configure --prefix=$(pwd)/build
 make
 make install
 
