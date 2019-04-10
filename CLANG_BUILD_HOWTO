@@ -1,0 +1,22 @@
+git clone --branch swift-4.2.1-RELEASE https://github.com/apple/swift-llvm.git --depth 1
+cd swift-llvm/tools
+git clone --branch swift-4.2.1-RELEASE https://github.com/apple/swift-clang.git --depth 1
+
+OSX: cd ../projects && git clone --branch swift-5.0-branch https://github.com/apple/swift-libcxx.git --depth 1
+
+cd ../..
+mkdir llvm-clang_build && cd llvm-clang_build
+
+LINUX: CC=$(which clang) CXX=$(which clang++) cmake -G "Ninja" -DCMAKE_BUILD_TYPE=Release -DLLVM_DEFAULT_TARGET_TRIPLE=x86_64-apple-darwin17.7.0 -DCMAKE_INSTALL_PREFIX:PATH=$(pwd)/code/clang_darwin_on_linux/ ../swift-llvm
+OSX:   CC=$(which clang) CXX=$(which clang++) cmake -G "Ninja" -DCMAKE_BUILD_TYPE=Release -DLLVM_DEFAULT_TARGET_TRIPLE=x86_64-apple-darwin16.0.0 -DDEFAULT_SYSROOT=/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator12.1.sdk/ -DCMAKE_INSTALL_PREFIX:PATH=$(pwd)/code/clang_darwin_on_darwin/ ../swift-llvm
+
+ninja -j8 && ninja install
+
+cd ../icecream-fork
+
+chmod +x build/bin/icecc-create-env
+
+build/bin/icecc-create-env --clang $(pwd)/../llvm-clang_build/code/clang_darwin_on_darwin/bin/clang $PWD/compilerwrapper/compilerwrapper
+
+LINUX: ./client/icecc-create-env --clang $(pwd)/../llvm-clang_build/code/clang_darwin_on_linux/bin/clang $PWD/compilerwrapper/compilerwrapper
+OSX:   ./client/icecc-create-env --clang $(pwd)/../llvm-clang_build/code/clang_darwin_on_darwin/bin/clang $PWD/compilerwrapper/compilerwrapper

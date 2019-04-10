@@ -997,7 +997,7 @@ void MsgChannel::setBulkTransfer()
     i = 1;
     setsockopt(fd, IPPROTO_TCP, TCP_CORK, (char *) &i, sizeof(i));
 #endif
-    i = 65536;
+    i = 131072;
     setsockopt(fd, SOL_SOCKET, SO_SNDBUF, &i, sizeof(i));
 }
 
